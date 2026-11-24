@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>World news, one page</title>
+<style>
+  :root {
+    --paper: #f6f1e7; --ink: #16130f; --mute: #5d554a; --rule: #2a241c; --hair: #cfc5b3;
+    --eu: #2f5d9e; --me: #b5462e; --as: #8a4fb0; --af: #c07a12; --am: #2e8a57; --oc: #1f8a9a; --gl: #3d3d3d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1024px; height: 1024px; overflow: hidden; background: var(--paper); color: var(--ink);
+    font-family: "Segoe UI", Arial, sans-serif; }
+  .page { position: absolute; inset: 0; padding: 10px 14px; }
+  .serif { font-family: Georgia, "Times New Roman", serif; }
+  .topbar { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    border-bottom: 3px solid var(--rule); padding-bottom: 3px; }
+  .topbar .mid { color: #a3271c; }
+  h1 { font-family: Georgia, serif; font-size: 62px; line-height: 1; text-align: center; letter-spacing: -1px; margin: 6px 0 4px; }
+  .tally { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-align: center; border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule); padding: 2px 0; }
+  .lede { font-family: Georgia, serif; font-style: italic; font-size: 17px; white-space: nowrap; text-align: center; margin: 4px 0 4px; }
+  .lede b { color: #a3271c; font-style: normal; margin: 0 6px; }
+  .stats { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 2px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .stat { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border-left: 1px solid var(--hair); }
+  .stat:first-child { border-left: 0; }
+  .stat .n { font-family: Georgia, serif; font-size: 25px; font-weight: 700; white-space: nowrap; }
+  .stat .l { font-size: 10px; line-height: 1.15; color: var(--mute); }
+  .heroes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 7px; }
+  .hero svg { display: block; width: 100%; height: 122px; border: 1px solid var(--rule); }
+  .kicker { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px; font-weight: 700; letter-spacing: .04em; }
+  .tag { color: #fff; padding: 1px 6px; }
+  .num { display: inline-flex; width: 17px; height: 17px; border-radius: 50%; background: var(--ink); color: #fff;
+    font-size: 10px; align-items: center; justify-content: center; font-weight: 700; flex: none; }
+  .place { color: var(--mute); }
+  .hero h2 { font-family: Georgia, serif; font-size: 23px; line-height: 1.08; margin: 3px 0 2px; }
+  .hero p { font-size: 12px; line-height: 1.25; }
+  .src { font-size: 9px; color: var(--mute); letter-spacing: .05em; margin-top: 2px; text-transform: uppercase; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 7px; }
+  .card { display: flex; gap: 6px; border-top: 4px solid; background: #fbf8f1; padding: 5px 6px; min-height: 92px; }
+  .card .ic { width: 64px; flex: none; text-align: center; }
+  .card .ic svg { width: 46px; height: 40px; display: block; margin: 0 auto; }
+  .card .big { font-family: Georgia, serif; font-weight: 700; font-size: 17px; white-space: nowrap; line-height: 1; }
+  .card .cap { font-size: 8px; color: var(--mute); text-transform: uppercase; letter-spacing: .04em; }
+  .card .k { font-size: 10px; font-weight: 700; letter-spacing: .04em; display: flex; gap: 4px; align-items: center; }
+  .card h3 { font-family: Georgia, serif; font-size: 16px; line-height: 1.08; margin: 2px 0; }
+  .card p { font-size: 10.5px; line-height: 1.2; color: #2f2a23; }
+  .bottom { display: grid; grid-template-columns: 360px 1fr; gap: 12px; margin-top: 7px; }
+  .boxhead { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; margin-bottom: 3px; }
+  .boxhead span.b { background: var(--ink); color: #fff; padding: 1px 6px; letter-spacing: .05em; }
+  .boxhead span.s { font-weight: 400; color: var(--mute); }
+  #map { width: 360px; height: 172px; box-sizing: border-box; display: block; border: 1px solid var(--rule); background: #dfe9ee; }
+  .also { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(12, auto); grid-auto-flow: column; column-gap: 12px; }
+  .also div { font-size: 10.5px; line-height: 1.12; border-bottom: 1px dotted var(--hair); padding: 1px 0;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; gap: 4px; align-items: center; }
+  .also b { font-weight: 700; }
+  .also .num { width: 15px; height: 15px; font-size: 8.5px; }
+  .datecheck { margin-top: 7px; border: 1.5px solid #a3271c; padding: 3px 7px; font-size: 10.5px; line-height: 1.3; }
+  .datecheck b { color: #a3271c; }
+  .foot { text-align: center; font-size: 10px; color: var(--mute); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="page" id="page"></div>
+<script>
+// ------------------------------------------------------------------ DATA (the day's stories)
+var DAY = {
+  title: 'Monday 23 November 2026',
+  short: 'MONDAY 23 NOV',
+  dayOfYear: 'DAY 327 OF 2026',
+  lede: ['Story one', 'Story two', 'Story three'],
+  stats: [['0', 'label'], ['0', 'label'], ['0', 'label'], ['0', 'label'], ['0', 'label'], ['0', 'label']],
+  heroes: [
+    { region: 'eu', tag: 'EUROPE · TOPIC', place: 'PLACE', head: 'Headline', text: 'Summary.', src: 'BBC', art: 'blank', lat: 50, lon: 30 },
+    { region: 'me', tag: 'MIDDLE EAST', place: 'PLACE', head: 'Headline', text: 'Summary.', src: 'BBC', art: 'blank', lat: 31, lon: 35 },
+    { region: 'as', tag: 'ASIA', place: 'PLACE', head: 'Headline', text: 'Summary.', src: 'BBC', art: 'blank', lat: 35, lon: 139 },
+  ],
+  cards: [],
+  also: [],
+  dateCheck: '',
+};
+// (data.js, loaded after this block, replaces DAY with the day's real stories)
+// ------------------------------------------------------------------ helpers
+const COLORS = { eu: '#2f5d9e', me: '#b5462e', as: '#8a4fb0', af: '#c07a12', am: '#2e8a57', oc: '#1f8a9a', gl: '#3d3d3d' };
+const NAMES = { eu: 'EUROPE', me: 'MIDDLE EAST', as: 'ASIA', af: 'AFRICA', am: 'AMERICAS', oc: 'OCEANIA', gl: 'GLOBAL' };
+const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+</script>
+<script src="data.js"></script>
+<script src="art.js"></script>
+<script src="map.js"></script>
+<script src="layout.js"></script>
+</body>
+</html>

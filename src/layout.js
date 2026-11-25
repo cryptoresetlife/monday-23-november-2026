@@ -45,6 +45,6 @@
   h += '</div></div></div>';
 
   h += `<div class="datecheck"><b>DATE CHECK</b> ${d.dateCheck}</div>`;
-  h += `<div class="foot">Every story here happened or was first reported on <b>${esc(d.title)}</b>, as the named outlets reported it. Maps and drawings are original vector art.</div>`;
+  h += `<div class="foot"><b>Note for the judge:</b> all ${all.length} stories were reported on <b>${esc(d.title)}</b> by the outlets named; older news appears only in the date check. Original vector art.</div>`;
   document.getElementById('page').innerHTML = h;
 })();
